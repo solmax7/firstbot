@@ -4,6 +4,7 @@ from aiogram import Bot, Dispatcher, types
 from aiogram.enums import ParseMode
 from aiogram.filters import CommandStart
 from aiogram.webhook.aiohttp_server import SimpleRequestHandler, setup_application
+from aiogram.client.default import DefaultBotProperties
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -12,7 +13,8 @@ PUBLIC_URL = os.environ.get("PUBLIC_URL", "")
 WEBHOOK_SECRET = os.environ.get("WEBHOOK_SECRET", "whsec")
 WEBHOOK_PATH = f"/tg/{WEBHOOK_SECRET}"
 
-bot = Bot(BOT_TOKEN, parse_mode=ParseMode.HTML)
+# ✅ новый стиль aiogram >= 3.7
+bot = Bot(BOT_TOKEN, default=DefaultBotProperties(parse_mode=ParseMode.HTML))
 dp = Dispatcher()
 
 @dp.message(CommandStart())
@@ -41,7 +43,8 @@ def main():
     app.on_startup.append(on_startup)
     app.on_shutdown.append(on_shutdown)
     setup_application(app, dp, bot=bot)
-    web.run_app(app, host="0.0.0.0", port=int(os.environ.get("PORT", 8080)))
+    port = int(os.environ.get("PORT", 8080))  # Railway подставляет $PORT
+    web.run_app(app, host="0.0.0.0", port=port)
 
 if __name__ == "__main__":
     main()
