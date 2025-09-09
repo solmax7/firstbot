@@ -3,11 +3,12 @@ from aiogram import Bot, Dispatcher, types
 from aiogram.enums import ParseMode
 from aiogram.filters import CommandStart
 from dotenv import load_dotenv
+from aiogram.enums import ParseMode
+from aiogram.client.default import DefaultBotProperties
 
-load_dotenv()
-BOT_TOKEN = os.environ["BOT_TOKEN"]
+bot = Bot(BOT_TOKEN, default=DefaultBotProperties(parse_mode=ParseMode.HTML))
 
-bot = Bot(BOT_TOKEN, parse_mode=ParseMode.HTML)
+
 dp = Dispatcher()
 
 @dp.message(CommandStart())
