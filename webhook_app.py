@@ -12,7 +12,10 @@ PUBLIC_URL = os.environ.get("PUBLIC_URL", "")
 WEBHOOK_SECRET = os.environ.get("WEBHOOK_SECRET", "whsec")
 WEBHOOK_PATH = f"/tg/{WEBHOOK_SECRET}"
 
-bot = Bot(BOT_TOKEN, parse_mode=ParseMode.HTML)
+from aiogram.enums import ParseMode
+from aiogram.client.default import DefaultBotProperties
+
+bot = Bot(BOT_TOKEN, default=DefaultBotProperties(parse_mode=ParseMode.HTML))
 dp = Dispatcher()
 
 @dp.message(CommandStart())
