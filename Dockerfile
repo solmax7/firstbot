@@ -4,5 +4,4 @@ WORKDIR /app
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
-# Default to webhook mode in container (Render/Railway set PUBLIC_URL)
 CMD ["python", "webhook_app.py"]
